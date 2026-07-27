@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--page-bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+:root {
+  /* Primary palette (derived from reference screenshots) */
+  --page-bg: #f8fafc; /* light page surface */
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+  --sidebar-bg: #061422;
+  --card-bg: #ffffff; /* card surface */
+  --muted: #6b7280;
+  --text-default: #18191a;  --text-on-dark: #f8fafc;  --accent: #f97316; /* orange */
+  --accent-2: #fb7185; /* rose */
+  --brand-indigo: #6366f1;
+  --border-soft: #e5e7eb;
+}
+
+/* Utility aliases used across components for quick theming */
+.bg-app { background-color: var(--surface-soft); }
+.bg-sidebar { background-color: var(--sidebar-bg); }
+.bg-card { background-color: var(--surface); }
+.text-muted { color: var(--muted); }
+.text-on-dark { color: var(--text-on-dark); }
+.text-default { color: var(--text-default); }
+.accent { color: var(--accent); }
+.accent-bg { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+.card-border { border-color: var(--border-soft); }
+
+/* Utility aliases used across components for quick theming */
+.bg-app { background-color: var(--page-bg); }
+.bg-sidebar { background-color: var(--sidebar-bg); }
+.bg-card { background-color: var(--card-bg); }
+.text-muted { color: var(--muted); }
+.text-on-dark { color: var(--text-on-dark); }
+.accent { color: var(--accent); }
+.accent-bg { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+.card-border { border-color: var(--border-soft); }
+
+html {
+  scroll-behavior: smooth;
+}

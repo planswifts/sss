@@ -1,0 +1,23 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/login/page": "app/login/page.js",
+  "/(dashboard)/approvals/history/page": "app/(dashboard)/approvals/history/page.js",
+  "/(dashboard)/approvals/page": "app/(dashboard)/approvals/page.js",
+  "/(dashboard)/approvals/pending/page": "app/(dashboard)/approvals/pending/page.js",
+  "/(dashboard)/disbursements/batch-disbursement/page": "app/(dashboard)/disbursements/batch-disbursement/page.js",
+  "/(dashboard)/disbursements/page": "app/(dashboard)/disbursements/page.js",
+  "/(dashboard)/disbursements/send-single-disbursement/page": "app/(dashboard)/disbursements/send-single-disbursement/page.js",
+  "/(dashboard)/home/find-by-payment-proof/page": "app/(dashboard)/home/find-by-payment-proof/page.js",
+  "/(dashboard)/payment-links/details/page": "app/(dashboard)/payment-links/details/page.js",
+  "/(dashboard)/page": "app/(dashboard)/page.js",
+  "/(dashboard)/payment-links/page": "app/(dashboard)/payment-links/page.js",
+  "/(dashboard)/payments/find-by-payment-proof/page": "app/(dashboard)/payments/find-by-payment-proof/page.js",
+  "/(dashboard)/payments/page": "app/(dashboard)/payments/page.js",
+  "/(dashboard)/reports/page": "app/(dashboard)/reports/page.js",
+  "/(dashboard)/payments/transaction-details/page": "app/(dashboard)/payments/transaction-details/page.js",
+  "/(dashboard)/settings/banking/page": "app/(dashboard)/settings/banking/page.js",
+  "/(dashboard)/settings/page": "app/(dashboard)/settings/page.js",
+  "/(dashboard)/settings/store-profile/page": "app/(dashboard)/settings/store-profile/page.js",
+  "/(dashboard)/settings/team/page": "app/(dashboard)/settings/team/page.js",
+  "/(dashboard)/disbursements/details/page": "app/(dashboard)/disbursements/details/page.js"
+}
