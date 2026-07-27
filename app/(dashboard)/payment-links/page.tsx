@@ -1,13 +1,13 @@
 'use client'
 
-import Link from 'next/link'
 import { NotificationBanner } from '@/components/NotificationBanner'
-import { Search, ChevronDown, Copy, MoreVertical } from 'lucide-react'
+import { ChevronDown, Plus, Copy, Download } from 'lucide-react'
 
 const paymentLinks = [
-  { id: 1, reference: 'PL-001', amount: '₱1,500.00', status: 'Active', created: 'Jul 21, 2026', usage: '15 payments' },
-  { id: 2, reference: 'PL-002', amount: '₱2,000.00', status: 'Expired', created: 'Jul 20, 2026', usage: '8 payments' },
-  { id: 3, reference: 'PL-003', amount: '₱500.00', status: 'Active', created: 'Jul 19, 2026', usage: '4 payments' },
+  { id: 1, name: 'Summer Sale 2026', link: 'https://pay.swiftpay.io/link-001', amount: '₱999.00', createdDate: 'Jul 15 2026', status: 'Active', scans: 142, conversions: 38 },
+  { id: 2, name: 'Product Preorder', link: 'https://pay.swiftpay.io/link-002', amount: '₱2,500.00', createdDate: 'Jul 10 2026', status: 'Active', scans: 256, conversions: 71 },
+  { id: 3, name: 'Event Ticket', link: 'https://pay.swiftpay.io/link-003', amount: '₱1,500.00', createdDate: 'Jul 5 2026', status: 'Expired', scans: 89, conversions: 12 },
+  { id: 4, name: 'Service Fee', link: 'https://pay.swiftpay.io/link-004', amount: '₱500.00', createdDate: 'Jun 28 2026', status: 'Active', scans: 103, conversions: 45 },
 ]
 
 export default function PaymentLinksPage() {
@@ -15,60 +15,74 @@ export default function PaymentLinksPage() {
     <div className="p-6 space-y-6">
       <NotificationBanner />
 
-      <div className="flex items-center justify-between mb-6 gap-3 flex-wrap">
-        <h1 className="text-3xl font-bold text-default">Payment Links</h1>
-        <Link href="/payment-links/create" className="px-4 py-2 rounded-full bg-accent text-white text-sm font-medium shadow-sm hover:bg-orange-600">
-          + Create Payment Link
-        </Link>
-      </div>
-
-      {/* Filters */}
-      <div className="flex items-center gap-3 bg-card p-4 rounded-lg border card-border">
-        <span className="text-sm text-muted">Status:</span>
-        <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border card-border bg-card text-sm text-default hover:bg-surface-soft">
-          <span>All</span>
-          <ChevronDown size={16} />
-        </button>
-
-        <div className="ml-auto relative w-64">
-          <Search size={18} className="absolute left-3 top-2.5 text-muted" />
-          <input type="text" placeholder="Search..." className="w-full pl-10 pr-4 py-1.5 rounded-full border card-border bg-surface outline-none focus:border-accent focus:ring-2 focus:ring-orange-100" />
+      <div>
+        <h1 className="text-3xl font-bold text-default mb-4">Payment Links</h1>
+        <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
+          <span className="font-medium">Status:</span>
+          <button className="flex items-center gap-1 rounded-full border card-border bg-card px-3 py-2 text-default shadow-sm transition hover:bg-surface-soft">
+            <span>All</span>
+            <ChevronDown size={16} />
+          </button>
+          <span className="text-muted">Active: 3 · Expired: 1</span>
         </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-card rounded-lg border card-border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Active Links</p>
+          <p className="mt-4 text-4xl font-semibold text-default">3</p>
+          <p className="mt-2 text-sm text-muted">Currently active</p>
+        </div>
+        <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Total Conversions</p>
+          <p className="mt-4 text-4xl font-semibold text-default">166</p>
+          <p className="mt-2 text-sm text-muted">All time payments</p>
+        </div>
+      </div>
+
+      <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 className="text-lg font-semibold text-default">All links</h2>
+            <p className="text-sm text-muted">Manage your payment links.</p>
+          </div>
+          <button className="flex items-center gap-2 rounded-full border card-border bg-card px-4 py-2 text-sm font-semibold text-default hover:bg-surface-soft">
+            <Plus size={16} />
+            New Link
+          </button>
+        </div>
+
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[1000px] text-left">
             <thead>
-              <tr className="bg-surface-soft border-b card-border">
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">REFERENCE</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">AMOUNT</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">STATUS</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">CREATED</th>
-                <th className="text-right text-xs font-semibold text-muted px-6 py-4"></th>
+              <tr className="border-b card-border text-muted">
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Name</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Amount</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Created</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Scans</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Conversions</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Status</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Action</th>
               </tr>
             </thead>
             <tbody>
               {paymentLinks.map((link) => (
-                <tr key={link.id} className="border-b border-surface-soft hover:bg-surface-soft">
-                  <td className="px-6 py-4">
-                    <Link href="/payment-links/details" className="text-sm font-semibold text-accent hover:text-orange-600">{link.reference}</Link>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm font-semibold text-default">{link.amount}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${link.status === 'Active' ? 'bg-emerald-100 text-emerald-700' : 'bg-surface-soft text-muted'}`}>
+                <tr key={link.id} className="border-b card-border hover:bg-surface-soft">
+                  <td className="py-4 px-4 font-medium text-default">{link.name}</td>
+                  <td className="py-4 px-4 text-default font-medium">{link.amount}</td>
+                  <td className="py-4 px-4 text-sm text-muted">{link.createdDate}</td>
+                  <td className="py-4 px-4 text-default">{link.scans}</td>
+                  <td className="py-4 px-4 text-default font-medium">{link.conversions}</td>
+                  <td className="py-4 px-4">
+                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
+                      link.status === 'Active' ? 'bg-emerald-100 text-emerald-700' : 'bg-surface-soft text-muted'
+                    }`}>
                       {link.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm text-muted">{link.created}</p>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="p-1 rounded-full hover:bg-surface-soft">
-                      <MoreVertical size={18} className="text-muted" />
+                  <td className="py-4 px-4">
+                    <button className="text-primary hover:underline">
+                      <Copy size={16} />
                     </button>
                   </td>
                 </tr>

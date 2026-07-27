@@ -1,13 +1,12 @@
 'use client'
 
-import Link from 'next/link'
 import { NotificationBanner } from '@/components/NotificationBanner'
-import { ChevronDown, MoreVertical } from 'lucide-react'
+import { ChevronDown, CheckCircle, Clock } from 'lucide-react'
 
-const approvalsData = [
-  { id: 1, title: 'Payment Approval #001', amount: '₱5,000.00', requester: 'John Doe', date: 'Jul 21, 2026', status: 'Pending' },
-  { id: 2, title: 'Disbursement Approval #002', amount: '₱3,500.00', requester: 'Jane Smith', date: 'Jul 21, 2026', status: 'Pending' },
-  { id: 3, title: 'Payment Link Approval #003', amount: '₱2,000.00', requester: 'Bob Johnson', date: 'Jul 20, 2026', status: 'Approved' },
+const approvals = [
+  { id: 1, reference: 'TXN-2026-001', type: 'Disbursement', amount: '₱50,000', requestedBy: 'John Doe', requestedDate: 'Jul 21 2026, 2:15 pm', status: 'Pending', priority: 'High' },
+  { id: 2, reference: 'TXN-2026-002', type: 'Payment Link', amount: '₱25,000', requestedBy: 'Jane Smith', requestedDate: 'Jul 20 2026, 3:45 pm', status: 'Pending', priority: 'Medium' },
+  { id: 3, reference: 'TXN-2026-003', type: 'Batch Payment', amount: '₱100,000', requestedBy: 'Mike Johnson', requestedDate: 'Jul 19 2026, 11:20 am', status: 'Approved', priority: 'Low' },
 ]
 
 export default function ApprovalsPage() {
@@ -15,65 +14,76 @@ export default function ApprovalsPage() {
     <div className="p-6 space-y-6">
       <NotificationBanner />
 
-      <div className="flex items-center justify-between mb-6 gap-3 flex-wrap">
-        <h1 className="text-3xl font-bold text-default">Approvals</h1>
-        <div className="flex gap-3 flex-wrap">
-          <Link href="/approvals/pending" className="px-4 py-2 rounded-full border card-border bg-card text-sm font-medium text-default hover:bg-surface-soft">
-            Pending
-          </Link>
-          <Link href="/approvals/history" className="px-4 py-2 rounded-full bg-accent text-white text-sm font-medium shadow-sm hover:bg-orange-600">
-            History
-          </Link>
+      <div>
+        <h1 className="text-3xl font-bold text-default mb-4">Approvals</h1>
+        <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
+          <span className="font-medium">Status:</span>
+          <button className="flex items-center gap-1 rounded-full border card-border bg-card px-3 py-2 text-default shadow-sm transition hover:bg-surface-soft">
+            <span>All</span>
+            <ChevronDown size={16} />
+          </button>
+          <span className="text-muted">Pending: 2 · Approved: 1</span>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="flex items-center gap-3 bg-card p-4 rounded-lg border card-border">
-        <span className="text-sm text-muted">Status:</span>
-        <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border card-border bg-card text-sm text-default hover:bg-surface-soft">
-          <span>All</span>
-          <ChevronDown size={16} />
-        </button>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+          <div className="flex items-center gap-3 mb-3">
+            <Clock size={24} className="text-amber-500" />
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Pending</p>
+          </div>
+          <p className="text-4xl font-semibold text-default">2</p>
+          <p className="mt-2 text-sm text-muted">Awaiting your approval</p>
+        </div>
+        <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+          <div className="flex items-center gap-3 mb-3">
+            <CheckCircle size={24} className="text-emerald-500" />
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Approved</p>
+          </div>
+          <p className="text-4xl font-semibold text-default">1</p>
+          <p className="mt-2 text-sm text-muted">Total this period</p>
+        </div>
       </div>
 
-      {/* Approvals List */}
-      <div className="bg-card rounded-lg border card-border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
+      <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-default">Pending approvals</h2>
+          <p className="text-sm text-muted">Items requiring your action.</p>
+        </div>
+
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[900px] text-left">
             <thead>
-              <tr className="bg-surface-soft border-b card-border">
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">TITLE</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">AMOUNT</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">REQUESTER</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">DATE</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">STATUS</th>
-                <th className="text-right text-xs font-semibold text-muted px-6 py-4"></th>
+              <tr className="border-b card-border text-muted">
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Reference</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Type</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Amount</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Requested By</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Date</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Priority</th>
+                <th className="py-4 px-4 text-xs uppercase tracking-[0.24em]">Action</th>
               </tr>
             </thead>
             <tbody>
-              {approvalsData.map((approval) => (
+              {approvals.filter(a => a.status === 'Pending').map((approval) => (
                 <tr key={approval.id} className="border-b card-border hover:bg-surface-soft">
-                  <td className="px-6 py-4">
-                    <p className="text-sm font-semibold text-default">{approval.title}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm font-semibold text-default">{approval.amount}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm text-muted">{approval.requester}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm text-muted">{approval.date}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${approval.status === 'Approved' ? 'bg-emerald-100 text-emerald-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                      {approval.status}
+                  <td className="py-4 px-4 font-medium text-default">{approval.reference}</td>
+                  <td className="py-4 px-4 text-sm text-muted">{approval.type}</td>
+                  <td className="py-4 px-4 font-medium text-default">{approval.amount}</td>
+                  <td className="py-4 px-4 text-sm text-muted">{approval.requestedBy}</td>
+                  <td className="py-4 px-4 text-sm text-muted">{approval.requestedDate}</td>
+                  <td className="py-4 px-4">
+                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
+                      approval.priority === 'High' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'
+                    }`}>
+                      {approval.priority}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="p-1 rounded-full hover:bg-surface-soft">
-                      <MoreVertical size={18} className="text-muted" />
-                    </button>
+                  <td className="py-4 px-4">
+                    <div className="flex gap-2">
+                      <button className="text-xs font-semibold text-emerald-600 hover:underline">Approve</button>
+                      <button className="text-xs font-semibold text-red-600 hover:underline">Reject</button>
+                    </div>
                   </td>
                 </tr>
               ))}

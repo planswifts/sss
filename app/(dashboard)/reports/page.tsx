@@ -1,15 +1,17 @@
 'use client'
 
 import { NotificationBanner } from '@/components/NotificationBanner'
-import { ChevronDown, Download, MoreVertical } from 'lucide-react'
+import { ChevronDown, Download, BarChart3 } from 'lucide-react'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
-const reports = [
-  { id: 1, reportId: '2327135', name: 'Reconciliation', date: 'Jul 20, 2026', status: 'No report data' },
-  { id: 2, reportId: '2323845', name: 'Daily disbursement', date: 'Jul 20, 2026', status: 'No report data' },
-  { id: 3, reportId: '2323779', name: 'Reconciliation', date: 'Jul 19, 2026', status: 'No report data' },
-  { id: 4, reportId: '2320490', name: 'Daily disbursement', date: 'Jul 19, 2026', status: 'No report data' },
-  { id: 5, reportId: '2320425', name: 'Reconciliation', date: 'Jul 18, 2026', status: 'No report data' },
-  { id: 6, reportId: '2317136', name: 'Daily disbursement', date: 'Jul 18, 2026', canDownload: true },
+const reportData = [
+  { month: 'Jan', payments: 65000, disbursements: 28000 },
+  { month: 'Feb', payments: 59000, disbursements: 32000 },
+  { month: 'Mar', payments: 72000, disbursements: 35000 },
+  { month: 'Apr', payments: 68000, disbursements: 30000 },
+  { month: 'May', payments: 81000, disbursements: 42000 },
+  { month: 'Jun', payments: 89000, disbursements: 45000 },
+  { month: 'Jul', payments: 95000, disbursements: 48000 },
 ]
 
 export default function ReportsPage() {
@@ -17,57 +19,94 @@ export default function ReportsPage() {
     <div className="p-6 space-y-6">
       <NotificationBanner />
 
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-default">Reports</h1>
+      <div>
+        <h1 className="text-3xl font-bold text-default mb-4">Reports</h1>
+        <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
+          <span className="font-medium">Period:</span>
+          <button className="flex items-center gap-1 rounded-full border card-border bg-card px-3 py-2 text-default shadow-sm transition hover:bg-surface-soft">
+            <span>Last 12 months</span>
+            <ChevronDown size={16} />
+          </button>
+          <span className="text-muted">Generated today</span>
+        </div>
       </div>
 
-      {/* Filters */}
-      <div className="flex items-center gap-3 bg-card p-4 rounded-lg border card-border">
-        <span className="text-sm text-muted">Range:</span>
-        <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border card-border bg-card text-sm text-default hover:bg-surface-soft">
-          <span>Last 7 days</span>
-          <ChevronDown size={16} />
-        </button>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Total Volume</p>
+          <p className="mt-4 text-4xl font-semibold text-default">₱629,000</p>
+          <p className="mt-2 text-sm text-muted">All transactions</p>
+        </div>
+        <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Avg. Monthly</p>
+          <p className="mt-4 text-4xl font-semibold text-default">₱89,857</p>
+          <p className="mt-2 text-sm text-muted">7 months average</p>
+        </div>
+        <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Growth Rate</p>
+          <p className="mt-4 text-4xl font-semibold text-default">+46%</p>
+          <p className="mt-2 text-sm text-muted">YoY increase</p>
+        </div>
       </div>
 
-      {/* Reports Table */}
-      <div className="bg-card rounded-lg border card-border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-surface-soft border-b card-border">
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">ID</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">NAME</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">DATE</th>
-                <th className="text-left text-xs font-semibold text-muted px-6 py-4">STATUS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reports.map((report) => (
-                <tr key={report.id} className="border-b card-border hover:bg-surface-soft">
-                  <td className="px-6 py-4">
-                    <p className="text-sm text-muted">{report.reportId}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm font-semibold text-accent hover:text-orange-600 cursor-pointer">{report.name}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm text-muted">{report.date}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    {report.canDownload ? (
-                      <button className="flex items-center gap-2 px-2 py-1 text-accent hover:text-orange-600 text-sm font-medium">
-                        <Download size={16} />
-                        Download
-                      </button>
-                    ) : (
-                      <p className="text-sm text-muted">{report.status}</p>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 className="text-lg font-semibold text-default">Monthly trends</h2>
+            <p className="text-sm text-muted">Payment and disbursement volume.</p>
+          </div>
+          <button className="flex items-center gap-2 rounded-full border card-border bg-card px-4 py-2 text-sm font-semibold text-default hover:bg-surface-soft">
+            <Download size={16} />
+            Download
+          </button>
+        </div>
+
+        <div className="mt-6 h-[320px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={reportData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis dataKey="month" stroke="#64748b" tickLine={false} />
+              <YAxis stroke="#64748b" tickLine={false} />
+              <Tooltip formatter={(value: number) => `₱${value.toLocaleString()}`} />
+              <Legend />
+              <Bar dataKey="payments" fill="#f97316" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="disbursements" fill="#38bdf8" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className="bg-card rounded-3xl border card-border p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-default mb-4">Report summary</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div className="flex justify-between items-center pb-3 border-b card-border">
+              <span className="text-muted">Total Payments</span>
+              <span className="font-semibold text-default">₱589,000</span>
+            </div>
+            <div className="flex justify-between items-center pb-3 border-b card-border">
+              <span className="text-muted">Total Disbursements</span>
+              <span className="font-semibold text-default">₱240,000</span>
+            </div>
+            <div className="flex justify-between items-center pb-3 border-b card-border">
+              <span className="text-muted">Processing Fees</span>
+              <span className="font-semibold text-default">₱2,945</span>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center pb-3 border-b card-border">
+              <span className="text-muted">Avg Transaction Value</span>
+              <span className="font-semibold text-default">₱8,414</span>
+            </div>
+            <div className="flex justify-between items-center pb-3 border-b card-border">
+              <span className="text-muted">Transaction Count</span>
+              <span className="font-semibold text-default">347</span>
+            </div>
+            <div className="flex justify-between items-center pb-3 border-b card-border">
+              <span className="text-muted">Success Rate</span>
+              <span className="font-semibold text-emerald-600">98.3%</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

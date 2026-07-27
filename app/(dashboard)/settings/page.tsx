@@ -1,59 +1,48 @@
 'use client'
 
-import Link from 'next/link'
 import { NotificationBanner } from '@/components/NotificationBanner'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Lock, Users, CreditCard, Code } from 'lucide-react'
+import Link from 'next/link'
+
+const settingsMenus = [
+  { label: 'Store Profile', description: 'Update your business information', icon: CreditCard, href: '/settings/store-profile' },
+  { label: 'Team', description: 'Manage team members and roles', icon: Users, href: '/settings/team' },
+  { label: 'Banking', description: 'Configure bank accounts', icon: Lock, href: '/settings/banking' },
+  { label: 'API Integration', description: 'Manage API keys and webhooks', icon: Code, href: '/settings/api-integration' },
+]
 
 export default function SettingsPage() {
   return (
     <div className="p-6 space-y-6">
       <NotificationBanner />
 
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-default">Settings</h1>
+      <div>
+        <h1 className="text-3xl font-bold text-default mb-4">Settings</h1>
+        <p className="text-sm text-muted">Manage your account and platform preferences.</p>
       </div>
 
-      {/* Settings Sections */}
-      <div className="space-y-4">
-        <Link href="/settings/store-profile" className="block bg-card rounded-lg border card-border p-6 hover:bg-surface-soft transition">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-default">Store Profile</h3>
-              <p className="text-sm text-muted mt-1">Manage your store information and branding</p>
-            </div>
-            <ChevronRight size={24} className="text-muted" />
-          </div>
-        </Link>
-
-        <Link href="/settings/banking" className="block bg-card rounded-lg border card-border p-6 hover:bg-surface-soft transition">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-default">Banking</h3>
-              <p className="text-sm text-muted mt-1">Manage your bank accounts and payment methods</p>
-            </div>
-            <ChevronRight size={24} className="text-muted" />
-          </div>
-        </Link>
-
-        <Link href="/settings/team" className="block bg-card rounded-lg border card-border p-6 hover:bg-surface-soft transition">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-default">Team</h3>
-              <p className="text-sm text-muted mt-1">Manage team members and permissions</p>
-            </div>
-            <ChevronRight size={24} className="text-muted" />
-          </div>
-        </Link>
-
-        <Link href="/settings/api-integration" className="block bg-card rounded-lg border card-border p-6 hover:bg-surface-soft transition">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-default">API Integration</h3>
-              <p className="text-sm text-muted mt-1">Manage API keys and integrations</p>
-            </div>
-            <ChevronRight size={24} className="text-muted" />
-          </div>
-        </Link>
+      <div className="space-y-3">
+        {settingsMenus.map((menu) => {
+          const Icon = menu.icon
+          return (
+            <Link
+              key={menu.href}
+              href={menu.href}
+              className="bg-card rounded-3xl border card-border p-6 shadow-sm hover:bg-surface-soft transition flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-2xl bg-surface-soft group-hover:bg-card transition">
+                  <Icon size={24} className="text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-default">{menu.label}</h3>
+                  <p className="text-sm text-muted">{menu.description}</p>
+                </div>
+              </div>
+              <ChevronRight size={20} className="text-muted group-hover:text-default transition" />
+            </Link>
+          )
+        })}
       </div>
     </div>
   )
